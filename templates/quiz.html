@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+    </head>
+    <body>
+        <h1>Willkommen zum Quiz {{ quiz["title"] }}</h1>
+        <form action="{{ url_for('quiz', quiz_id=quiz_id) }}" method="post"> 
+            {% for question_id, question in enumerate(quiz["questions"]) %}
+                <p> {{ question["question_text"] }}</p>
+                {% for option_id, option in enumerate(question["options"]) %}
+                    <input type="radio" name="{{question_id}}" value="{{ option_id }}"> {{ option }} <br>
+                {% endfor %}
+            {% endfor %}
+            <br>
+            <br>
+            <button type="submit"> Abschicken </button> 
+        </form>
+    </body>
+</html>

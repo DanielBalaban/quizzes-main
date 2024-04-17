@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Quizzes</title>
+    </head>
+    <body>
+        <h1>Wähle dein Quiz aus!</h1>
+        {% for quiz_id, quiz_info in quizzes.items() %}
+            <a href="{{ url_for('quiz', quiz_id=quiz_id) }}">
+                <button> {{ quiz_info['title'] }} </button>
+            </a>
+        {% endfor %}
+    </body>
+</html>
