@@ -96,12 +96,11 @@ def quiz(quiz_id):
 
 
 def calculate_score(questions, user_answers):
-    user_answers = session("user_answers")
-    correct_option = questions["correct_option"]
     correct_answers= 0
-    for correct_answers in user_answers:
-        if user_answers == correct_option:
+    for question_index, question in enumerate(questions):
+        if question_index in user_answers.keys() and user_answers[question_index] == question["correct_option"]: #1. checkt ob question_indes in dictionary user answer drinne ist, 2. checkt ob gleiche zahl
             correct_answers += 1
+    return correct_answers, len(questions)
 
 
 @app.route("/result/<int:quiz_id>") 
