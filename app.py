@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, session, redirect, url_for
-app = Flask(__name__)
 
+app = Flask(__name__)
+app.secret_key = "my_secret_key"
 
 quiz_data = {
     1: {
@@ -73,6 +74,7 @@ quiz_data = {
             }
         ]
     }
+    
 }
 
 
@@ -97,14 +99,16 @@ def quiz(quiz_id):
 
 def calculate_score(questions, user_answers):
     correct_answers= 0
+    user_answers = {int(key): int(value) for key, value in session['user_answers'].items()} # convert all keys and values from string to int
     for question_index, question in enumerate(questions):
-        if question_index in user_answers.keys() and user_answers[question_index] == question["correct_option"]: #1. checkt ob question_indes in dictionary user answer drinne ist, 2. checkt ob gleiche zahl
-            correct_answers += 1
+        if question_index in user_answers.keys() and user_answers[question_index] == question["correct_option"]: #1. checkt ob question_index in dictionary user_answer drinne ist, 2. checkt ob gleiche zahl
+            correct_answers = correct_answers + 1
     return correct_answers, len(questions)
 
 
 @app.route("/result/<int:quiz_id>") 
-def result(quiz_id):
+def result(quiz_id):  
+    quiz = quiz_data[quiz_id]
     correct_answers, total_answers = calculate_score(quiz_data[int(quiz_id)]["questions"], session["user_answers"])
     return render_template("result.html", correct=correct_answers, total=total_answers)       
 
