@@ -3,6 +3,11 @@
     <head>
         <meta charset="UTF-8">
         <title>Quizzes</title>
+    <style>
+        body {
+            background-color: aqua;
+        }
+    </style>
     </head>
     <body>
         <h1>Wähle dein Quiz aus!</h1>
@@ -11,5 +16,10 @@
                 <button> {{ quiz_info['title'] }} </button>
             </a>
         {% endfor %}
+        <br>
+        <br>
+        <a href="{{ url_for('index') }}">
+            <button> Gehe zurück</button>
+        </a>
     </body>
 </html>
